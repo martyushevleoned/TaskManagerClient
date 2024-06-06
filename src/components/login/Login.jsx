@@ -3,7 +3,7 @@ import './Login.css';
 import Auth from './auth/Auth'
 import Register from './register/Register';
 
-const Login = () => {
+const Login = ({addToken}) => {
 
     const [form, setForm] = useState('auth');
 
@@ -11,7 +11,7 @@ const Login = () => {
     const setRegister = () => setForm('register');
 
     if (form === 'auth')
-        return(<Auth setRegisterPage={setRegister}/>);
+        return(<Auth setRegisterPage={setRegister} addToken={addToken}/>);
     else if (form === 'register')
         return(<Register setAuthPage={setAuth}/>);
 };

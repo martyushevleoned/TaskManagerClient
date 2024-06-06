@@ -1,0 +1,10 @@
+.body-main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background: url('./background.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+}

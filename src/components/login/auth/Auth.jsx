@@ -1,7 +1,6 @@
-import './Auth.css';
 import {FaUser, FaLock} from "react-icons/fa";
 
-const Auth = ({setRegisterPage}) => {
+const Auth = ({setRegisterPage, addToken}) => {
 
     const handle = () => setRegisterPage();
 
@@ -9,9 +8,6 @@ const Auth = ({setRegisterPage}) => {
 
     const handleLogin = (event) => {
         event.preventDefault();
-
-        console.log(event.target.username.value);
-        console.log(event.target.password.value);
 
         fetch("http://localhost:8080/login", {
             method: 'POST',
@@ -24,10 +20,7 @@ const Auth = ({setRegisterPage}) => {
                 if (response.ok) {
                     alert("Аутентефикация прошла успешно");
                     delay(3000);
-                    response.text().then(token => {
-                        console.log(token);
-                        localStorage.setItem('jwt', token);
-                    })
+                    response.text().then(token => addToken(token));
                 } else {
                     alert("Ошибка аутентефикации");
                 }
@@ -35,16 +28,18 @@ const Auth = ({setRegisterPage}) => {
     }
 
     return (
-        <div className="wrapper">
-            <div className="form-box">
-                <form onSubmit={handleLogin}>
-                    <h1>Auth</h1>
-                    <div className="input-box"><input type="text" placeholder="Username" name="username" required/><FaUser className='icon'/></div>
-                    <div className="input-box"><input type="password" placeholder="Password" name="password" required/><FaLock className='icon'/></div>
-                    <button className='submit' type="submit">Login</button>
-                </form>
-                <div className="register-link">
-                    <p>Don't have an account? <button className="button-link" onClick={handle}>Registration</button></p>
+        <div className='body'>
+            <div className="wrapper">
+                <div className="form-box">
+                    <form onSubmit={handleLogin}>
+                        <h1>Auth</h1>
+                        <div className="input-box"><input type="text" placeholder="Username" name="username" required/><FaUser className='icon'/></div>
+                        <div className="input-box"><input type="password" placeholder="Password" name="password" required/><FaLock className='icon'/></div>
+                        <button className='submit' type="submit">Login</button>
+                    </form>
+                    <div className="register-link">
+                        <p>Don't have an account? <button className="button-link" onClick={handle}>Registration</button></p>
+                    </div>
                 </div>
             </div>
         </div>
