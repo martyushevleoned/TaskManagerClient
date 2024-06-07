@@ -1,5 +1,9 @@
+import React, {useState} from 'react';
+
 function Task({id, text, jwt, updateTasks}) {
 
+  const delay = (delayInms) => {return new Promise(resolve => setTimeout(resolve, delayInms));};
+  const [exit, setExit] = useState('')
   const deleteTask = (event) => {
     event.preventDefault();
 
@@ -13,8 +17,8 @@ function Task({id, text, jwt, updateTasks}) {
     })
         .then(response => {
             if (response.ok) {
-              updateTasks();
-              alert("ок");
+              setExit('exit');
+              delay(700).then(()=>updateTasks());
             } else {
               alert("Ошибка удаления задачи");
             }
@@ -23,7 +27,7 @@ function Task({id, text, jwt, updateTasks}) {
 
 
   return(
-    <div className='border blur task'>
+    <div className={exit + ' border blur task'}>
       <form onSubmit={deleteTask}>
         <input type="hidden" name="tid" value={id}/>
         <div className="task-input">{text}</div>

@@ -43,7 +43,6 @@ function Tasks({jwt}) {
         .then(response => {
             if (response.ok) {
               updateTasks();
-              alert("ок");
             } else {
               alert("Ошибка добавления задачи");
             }
@@ -58,7 +57,7 @@ function Tasks({jwt}) {
       <div className='border blur task'>
         <form onSubmit={addTask}>
           <div><input type="text" placeholder="task text" name="text"  className="border task-input" required/></div>
-          <div className="center"><button className="border button" type="submit">add task</button></div>
+          <div className="center"><button className="border button-create" type="submit">add task</button></div>
         </form>
       </div>
     </div>
