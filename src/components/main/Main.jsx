@@ -9,19 +9,19 @@ function Main({jwt, removeToken}) {
 
   useEffect(()=>{
     if (json.email === "email" && json.username === "username" )
-    fetch("http://localhost:8080/info", {
-      method: 'GET',
-      headers: {
-         Authorization: `Bearer ${jwt}`
-      }
-    })
-      .then(response => {
-          if (response.ok) {
-            response.json().then(json => setJson(json));
-          } else {
-            alert("Ошибка аутентефикации");
-          }
-      })  
+      fetch("http://localhost:8080/info", {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      })
+        .then(response => {
+            if (response.ok) {
+              response.json().then(json => setJson(json));
+            } else {
+              alert("Ошибка аутентефикации");
+            }
+        })  
   });
 
   return(

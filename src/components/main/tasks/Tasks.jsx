@@ -1,40 +1,36 @@
 import Task from "./Task";
+import React, {useState} from 'react';
 
 function Tasks({jwt}) {
 
-  const tasks = [
-    {
-      id: 1,
-      text: "text"
-    },
-    {
-      id: 2,
-      text: "text"
-    },
-    {
-      id: 3,
-      text: "text"
-    },
-    {
-      id: 3,
-      text: "text"
-    },
-    {
-      id: 3,
-      text: "text"
-    },
-    {
-      id: 3,
-      text: "text"
-    },
-    {
-      id: 3,
-      text: "text"
-    }
-  ];
+  const [tasks, setTasks] = useState([])
+  const [state, setState] = useState(0)
 
+  const updateTasks = () => {
+    fetch("http://localhost:8080/getAllTasks", {
+      method: 'GET',
+      headers: {
+         Authorization: `Bearer ${jwt}`
+      }
+    })
+        .then(response => {
+            if (response.ok) {
+                response.json().then(json => {
+                  console.log(json);
+                  setTasks(json);
+                });
+            } else {
+                alert("Ошибка получения списка задач");
+            }
+        })  
+  }
+
+  if (state === 0){
+    updateTasks();
+    setState(1);
+  }    
+ 
   const addTask = (event) => {
-
     event.preventDefault();
 
     fetch("http://localhost:8080/addTask", {
@@ -46,16 +42,18 @@ function Tasks({jwt}) {
     })
         .then(response => {
             if (response.ok) {
-                alert("ок");
+              updateTasks();
+              alert("ок");
             } else {
-                alert("Ошибка добавления задачи");
+              alert("Ошибка добавления задачи");
             }
-        })  
-}
+        })
+      event.target.reset();  
+    }
 
   return(
     <div className="border task-container">
-      {tasks.map(task => <Task id={task.id} text={task.text} />)}
+      {tasks.map(task => <Task key={task.id} id={task.id} text={task.text} jwt={jwt} updateTasks={updateTasks}/>)}
       
       <div className='border blur task'>
         <form onSubmit={addTask}>
