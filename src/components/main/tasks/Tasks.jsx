@@ -1,6 +1,6 @@
 import Task from "./Task";
 
-function Tasks({getToken}) {
+function Tasks({jwt}) {
 
   const tasks = [
     {
@@ -33,15 +33,34 @@ function Tasks({getToken}) {
     }
   ];
 
+  const addTask = (event) => {
+
+    event.preventDefault();
+
+    fetch("http://localhost:8080/addTask", {
+      method: 'POST',
+      headers: {
+         Authorization: `Bearer ${jwt}`
+      }, 
+      body: event.target.text.value
+    })
+        .then(response => {
+            if (response.ok) {
+                alert("ок");
+            } else {
+                alert("Ошибка добавления задачи");
+            }
+        })  
+}
 
   return(
     <div className="border task-container">
       {tasks.map(task => <Task id={task.id} text={task.text} />)}
       
       <div className='border blur task'>
-        <form>
-          <div><input type="text" className="border task-input"/></div>
-          <div className="center"><button className="border button">add task</button></div>
+        <form onSubmit={addTask}>
+          <div><input type="text" placeholder="task text" name="text"  className="border task-input" required/></div>
+          <div className="center"><button className="border button" type="submit">add task</button></div>
         </form>
       </div>
     </div>

@@ -8,6 +8,7 @@ function Main({jwt, removeToken}) {
   const [json, setJson] = useState({email:"email", username:"username"})
 
   useEffect(()=>{
+    if (json.email === "email" && json.username === "username" )
     fetch("http://localhost:8080/info", {
       method: 'GET',
       headers: {
@@ -37,7 +38,7 @@ function Main({jwt, removeToken}) {
         </div>
         <div className='flex'>
           <div>
-            <Tasks getToken={jwt}/>
+            <Tasks jwt={jwt}/>
           </div>
         </div>
       </div>
