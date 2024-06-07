@@ -9,12 +9,11 @@ function App() {
 
   const removeToken = () => setToken('');
   const addToken = (token) => setToken(token);
-  const getToken = () => {return jwt};
 
   if (jwt === '')
     return(<Login addToken={addToken}/>);
   else
-    return(<Main getToken={getToken} removeToken={removeToken}/>);
+    return(<Main jwt={jwt} removeToken={removeToken}/>);
 }
 
 export default App;
